@@ -39,7 +39,10 @@ export const booksSlice = createSlice(sliceOptions);
 
 export const selectAllBooks = (state) => state.books
 
-export const consoleLogMo
+export const consoleLogTHIS = () => {
+  console.log(booksSlice)
+}
+
 const allBooks = booksSlice.books
 // export const sortBooks = (attribute) => {
 //   let sortedBooks = allBooks.sort(function(a, b) {

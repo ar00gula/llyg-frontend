@@ -2,7 +2,7 @@ import React from 'react'; //, {useEffect}
 import BookList from './BookList'
 import Filter from '../Filter'
 import { useSelector } from "react-redux"; //useDispatch,
-import { selectAllBooks  } from './booksSlice' //booksSlice sortBooks
+import { selectAllBooks, consoleLogTHIS } from './booksSlice' //booksSlice sortBooks
 
 
 function BookListContainer() {
@@ -18,6 +18,7 @@ function BookListContainer() {
     
     return (
         <div>
+            {consoleLogTHIS()}
             {/* {console.log(sortBooks("author"))} */}
             {/* <Filter selectFilter={handleFilterSelection}/> */}
             <BookList filter={allBooks}/>
