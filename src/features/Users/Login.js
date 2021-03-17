@@ -28,6 +28,7 @@ export function LoginForm(){
     const handleSubmit = (event) => {
         event.preventDefault()
         fetch(`http://localhost:3001/login`, {
+            withCredentials: true,
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -39,12 +40,8 @@ export function LoginForm(){
             })
         })
         .then(resp => resp.json())
-        .then(data => console.log(data))
-        // .then(data => {
-        //     console.log(data)
-        //     }
-        // )
-        // .then(() => history.push('/account'))       
+        .then(data => dispatch(loginUser(data)))
+        .then(() => history.push('/account'))       
     }
 
     return (

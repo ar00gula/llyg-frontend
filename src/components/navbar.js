@@ -9,7 +9,7 @@ function NavBar() {
     const handleLogout = (event) => {
         event.preventDefault()
         fetch(`http://localhost:3001/logout`, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"

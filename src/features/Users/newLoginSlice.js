@@ -28,7 +28,7 @@ const sliceOptions = {
             state.password = action.payload
         },
         loginUser: (state, action) => {
-            state.username = action.payload.user.username
+            state.username = action.payload.username
             state.logged_in = action.payload.logged_in
             state.password = ""
         },
