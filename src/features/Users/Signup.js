@@ -1,11 +1,17 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUsername, setPassword, setEmail, setPasswordConfirmation } from './signupSlice'
+import { setUsername, setPassword, setEmail, setPasswordConfirmation, selectNewUserInfo } from './signupSlice'
+import { loginUser, setErrors } from './newLoginSlice'
 
-function SignUpForm(props) {
+export default function SignUpForm() {
 
-  const signupInfo = useSelector(state => state.signupInfo)
+  const newUserInfo = useSelector(selectNewUserInfo)
+
+  //change to session user info
+
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const handleUsernameChange = (event) => {
     dispatch(setUsername(event.target.value))
@@ -19,9 +25,40 @@ function SignUpForm(props) {
   const handlePasswordConfirmationChange = (event) => {
     dispatch(setPasswordConfirmation(event.target.value))
   }
+  const redirect = () => history.push('/account')
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
+    fetch('http://localhost:3001/users',
+    {withCredentials: true,
+    method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        username: newUserInfo.username,
+        email: newUserInfo.email,
+        password: newUserInfo.password,
+        password_confirmation: newUserInfo.passwordConfirmation
+      })
+    })
+      .then(resp => resp.json())
+      .then(data => { console.log(data)
+        if (data.status === 'created') {
+          dispatch(loginUser(data))
+          redirect()
+        } else {
+          dispatch(setErrors(data))
+        }
+      })
+      dispatch(setUsername(""))
+      dispatch(setEmail(""))
+      dispatch(setPassword(""))
+      dispatch(setPasswordConfirmation(""))
+      // .catch(error => console.log('api errors:', error))
+    };
   //   fetch('http://localhost:3001/users', {
   //     method: "POST",
   //     headers: {
@@ -43,7 +80,6 @@ function SignUpForm(props) {
   //   setEmail("")
   //   setPassword("")
   //   setPasswordConfirmation("")
-  }
 
   return(
     <div>
@@ -51,19 +87,19 @@ function SignUpForm(props) {
         <form className="ui form" onSubmit={handleSubmit}>
             <div className="field">
                 <label>Username</label>
-                <input value={signupInfo.username} onChange={handleUsernameChange} type="text" name="username" placeholder="username"/>
+                <input value={newUserInfo.username} onChange={handleUsernameChange} type="text" name="username" placeholder="username"/>
             </div>
             <div className="field">
                 <label>Email</label>
-                <input value={signupInfo.email} onChange={handleEmailChange} type="text" name="email" placeholder="email"/>
+                <input value={newUserInfo.email} onChange={handleEmailChange} type="text" name="email" placeholder="email"/>
             </div>
             <div className="field">
                 <label>Password</label>
-                <input value={signupInfo.password} onChange={handlePasswordChange} type="password" name="password" placeholder="password"/>
+                <input value={newUserInfo.password} onChange={handlePasswordChange} type="password" name="password" placeholder="password"/>
             </div>
             <div className="field">
                 <label>Password Confirmation</label>
-                <input value={signupInfo.passwordConfirmation} onChange={handlePasswordConfirmationChange} type="password" name="password-confirmation"placeholder="password confirmation"/>
+                <input value={newUserInfo.passwordConfirmation} onChange={handlePasswordConfirmationChange} type="password" name="password-confirmation" placeholder="password confirmation"/>
             </div>
             
             <button className="ui button" type="submit">Submit</button>
@@ -74,7 +110,4 @@ function SignUpForm(props) {
         </form>
     </div>
   )
-
 }
-
-export default SignUpForm;

@@ -3,36 +3,40 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const loginStatus = createAsyncThunk(
     'users/loginStatus',
     async () => {
-      const userStatus = await fetch(`http://localhost:3001/logged_in`)
+      const userStatus = await fetch(`http://localhost:3001/logged_in`, {withCredentials: true})
       const data = await userStatus.json()
       return data
     }
   )
-  
+
+
 const sliceOptions = {
     name: 'userInfo',
     initialState: { 
-        userInfo: {
-            username: "",
-            password: "",
-            user: "",
-            logged_in: "",
-            isLoading: false, 
-            hasError: false 
-        }
+        username: "",
+        password: "",
+        user: "",
+        logged_in: "",
+        isLoading: false, 
+        hasError: false, 
+        errors: []
     },
     reducers: {
         setUsername: (state, action) => {
-            state.username = action.payLoad
+            state.username = action.payload
         },
         setPassword: (state, action) => {
-            state.password = action.payLoad
+            state.password = action.payload
         },
         loginUser: (state, action) => {
-            state = action.payLoad
+            state.user = action.payload.user
+            state.logged_in = action.payload.logged_in
         },
         logoutUser: (state) => {
             state = {}
+        },
+        setErrors: (state, action) => {
+            state.errors = action.payload.errors
         }
     },
   extraReducers: {
@@ -41,7 +45,8 @@ const sliceOptions = {
       state.hasError = false;
      },
     [loginStatus.fulfilled]: (state, action) => {
-      state.users.push(action.payload);
+      state.user = action.payload.user;
+      state.logged_in = action.payload.logged_in;
       state.isLoading = false;
       state.hasError = false;
     },
@@ -52,15 +57,20 @@ const sliceOptions = {
     }
 }
 
-export const loginSlice = createSlice(sliceOptions);
+export const userInfoSlice = createSlice(sliceOptions);
 
 export const {
     setUsername,
     setPassword,
     loginUser,
     logoutUser,
-  } = loginSlice.actions;
+    setErrors
+  } = userInfoSlice.actions;
+
+
+//   setUsername: (payload) => {type 'userInfo/setUsername', payload}
+ 
 
 export const selectUserInfo = (state) => state.userInfo
 
-export default loginSlice.reducer;
+export default userInfoSlice.reducer;

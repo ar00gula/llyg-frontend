@@ -6,7 +6,7 @@ import Landing from '../features/Landing'
 import { loadBooks } from "../components/Books/booksSlice"
 import { LoginForm } from '../features/Users/Login'
 import { loginStatus } from '../features/Users/newLoginSlice'
-// import SignUpForm from '../features/Users/Signup'
+import SignUpForm from '../features/Users/Signup'
 
 
 
@@ -18,7 +18,7 @@ function App() {
   const { hasError } = useSelector((state) => state.books);
 
   useEffect(() => {
-    loginStatus();
+    dispatch(loginStatus());
     dispatch(loadBooks());
   }, [dispatch]);
 
@@ -35,9 +35,9 @@ function App() {
       <Route 
         exact path='/login' component={LoginForm}
       />
-      {/* <Route 
+      <Route 
         exact path='/signup' component={SignUpForm}
-      /> */}
+      />
       </Switch>
           {/* <Route path="/books/by-title" render={() => <BookCardContainer sortBy={['title']}/>} />
           <Route path="/books/by-author" component={() => <BookCardContainer sortBy={['author', 'last_name']}/>} /> */}
