@@ -1,54 +1,48 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Home from '../features/Users/Home'
 import LoginForm from '../features/Users/Login'
 import SignUpForm from '../features/Users/Signup'
 import NavBar from '../components/navbar'
 import Landing from '../features/Landing'
 import {setUsername} from '../features/Users/loginSlice'
+import { loadBooks } from "../components/Books/booksSlice"
+
 
 import './App.css'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
-function App(props) {
-  const dispatch = useDispatch()
-  //destructuring baybeeee
+function App() {
+  const dispatch = useDispatch();
+  const { hasError } = useSelector((state) => state.books);
 
-  // const handleLogin = (user) => {
-  //   setSessionUser(user)
-  // }
-  const handleClick = () => {
-    fetch(`http://localhost:3001/sessions`)
-        .then(resp => resp.json())
-        .then(data => {
-            console.log(data)
-            }
-        )
-  }
+  useEffect(() => {
+    dispatch(loadBooks());
+  }, [dispatch]);
 
-const handleLogin = (data) => {
-  dispatch(setUsername(data.username), true)
-}
+// const handleLogin = (data) => {
+//   dispatch(setUsername(data.username), true)
+// }
 
-const handleLogout = () => {
-    dispatch(setUsername("", false))
-  }
+// const handleLogout = () => {
+//     dispatch(setUsername("", false))
+//   }
 
-const loginStatus = () => {
-  fetch(`http://localhost:3001/logged_in`, {withCredentials: true})
-  .then(response => response.json())
-  .then(data => {
-    if (data.logged_in) {
-    handleLogin(data)
-  } else {
-    handleLogout()
-  }})
-    .catch(error => console.log('api errors:', error))      
-}
+// const loginStatus = () => {
+//   fetch(`http://localhost:3001/logged_in`, {withCredentials: true})
+//   .then(response => response.json())
+//   .then(data => {
+//     if (data.logged_in) {
+//     handleLogin(data)
+//   } else {
+//     handleLogout()
+//   }})
+//     .catch(error => console.log('api errors:', error))      
+// }
 
-useEffect(() => {
-    loginStatus()
-})
+// useEffect(() => {
+//     loginStatus()
+// })
 
   return (
     <div>
@@ -72,7 +66,6 @@ useEffect(() => {
           {/* put all my pages here!! the contents will change depending on what URL i'm at!! this is delightful!!!*/}
     </div>
     <NavBar />
-    <button onClick={handleClick}>Current User</button>
     </Router>
     </div>
   );
