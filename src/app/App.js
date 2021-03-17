@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux' //useSelector
 import Home from '../features/Users/Home'
 import NavBar from '../components/navbar'
 import Landing from '../features/Landing'
 import { loadBooks } from "../components/Books/booksSlice"
 import { LoginForm } from '../features/Users/Login'
-import { loginStatus } from '../features/Users/newLoginSlice'
 import SignUpForm from '../features/Users/Signup'
 
 
@@ -15,10 +14,9 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 function App() {
   const dispatch = useDispatch();
-  const { hasError } = useSelector((state) => state.books);
+  // const { hasError } = useSelector((state) => state.books);
 
   useEffect(() => {
-    dispatch(loginStatus());
     dispatch(loadBooks());
   }, [dispatch]);
 

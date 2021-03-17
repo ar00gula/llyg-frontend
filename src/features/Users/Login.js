@@ -1,11 +1,11 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUsername, setPassword, loginUser, selectUserInfo, userInfoSlice} from './newLoginSlice'
+import { setUsername, setPassword, loginUser, selectUserInfo} from './newLoginSlice'
 
 export function LoginForm(){
 
-    const history = useHistory()
+    // const history = useHistory()
 
     const userInfo = useSelector(selectUserInfo)
     
@@ -15,7 +15,6 @@ export function LoginForm(){
     //     console.log(userInfo.password)
     // }
 
-
     const handleUsernameChange = (event) => {
         dispatch(setUsername(event.target.value))
     }
@@ -23,7 +22,7 @@ export function LoginForm(){
     const handlePasswordChange = (event) => {
         dispatch(setPassword(event.target.value))
     }
-    const redirect = () => history.push('/account')
+    // const redirect = () => history.push('/account')
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -40,8 +39,7 @@ export function LoginForm(){
             })
         })
         .then(resp => resp.json())
-        .then(data => dispatch(loginUser(data)))
-        .then(() => history.push('/account'))       
+        .then(data => dispatch(loginUser(data)))       
     }
 
     return (
