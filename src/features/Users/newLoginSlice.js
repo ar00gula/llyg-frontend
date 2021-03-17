@@ -15,7 +15,6 @@ const sliceOptions = {
     initialState: { 
         username: "",
         password: "",
-        user: "",
         logged_in: "",
         isLoading: false, 
         hasError: false, 
@@ -29,8 +28,9 @@ const sliceOptions = {
             state.password = action.payload
         },
         loginUser: (state, action) => {
-            state.user = action.payload.user
+            state.username = action.payload.user.username
             state.logged_in = action.payload.logged_in
+            state.password = ""
         },
         logoutUser: (state) => {
             state = {}

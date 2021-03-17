@@ -20,7 +20,15 @@ const sliceOptions = {
         },
         setPasswordConfirmation: (state, action) => {
           state.passwordConfirmation = action.payload
-      }
+        },
+        clearNewUserInfo: (state, action) => {
+          state = { 
+            username: "",
+            email: "",
+            password: "",
+            passwordConfirmation: ""
+          }
+        }
     }
 }
 
@@ -31,6 +39,7 @@ export const {
     setPassword,
     setEmail,
     setPasswordConfirmation,
+    clearNewUserInfo
   } = newUserInfoSlice.actions;
 
 

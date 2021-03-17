@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUsername, setPassword, setEmail, setPasswordConfirmation, selectNewUserInfo } from './signupSlice'
+import { setUsername, setPassword, setEmail, setPasswordConfirmation, selectNewUserInfo, clearNewUserInfo } from './signupSlice'
 import { loginUser, setErrors } from './newLoginSlice'
 
 export default function SignUpForm() {
@@ -53,10 +53,7 @@ export default function SignUpForm() {
           dispatch(setErrors(data))
         }
       })
-      dispatch(setUsername(""))
-      dispatch(setEmail(""))
-      dispatch(setPassword(""))
-      dispatch(setPasswordConfirmation(""))
+      dispatch(clearNewUserInfo())
       // .catch(error => console.log('api errors:', error))
     };
   //   fetch('http://localhost:3001/users', {
