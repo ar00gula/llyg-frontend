@@ -22,10 +22,17 @@ function App() {
     dispatch(loadBooks());
   }, [dispatch]);
 
+  const fetchCurrentUser = () => {
+    fetch(`http://localhost:3001/users`)
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+  }
   return (
     <div>
     <Router>
     <div className="wrapper">
+    <button onClick={fetchCurrentUser}>current user</button>
+    <a href="/login">login</a>
       <Switch>
       <Route exact path="/" component={Landing} />
       <Route
