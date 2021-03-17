@@ -1,22 +1,25 @@
 import React from 'react'
 import { useSelector } from "react-redux"; //useDispatch,
-import { selectAllBooks } from './booksSlice' //booksSlice 
+import { selectAllBooks } from './booksSlice' //booksSlice
+import Book from '../Book'
 
-const BookList = () => {
+const BookList = (props) => {
 
-    // const dispatch = useDispatch();
-    const allBooks = useSelector(selectAllBooks);
-
+    // const authorName = (first, last) => {
+    //     return `${first} ${last}`
+    // }
+    
     return (
         <div>
             {
-        allBooks.books.map(book => (
-            <div className="book" key={book.id}>
-                <h1><a href={book.title.replace(/\s+/g, '-')}>{book.title}</a></h1>
-                <h2>{book.author.first_name} {book.author.last_name}</h2>
-            </div>
-        ))
-    }
+            props.filter.books.map(book => (
+                <div className="book" key={book.id}>
+                <Book info={book} />
+                    {/* <h1><a href={book.title.replace(/\s+/g, '-')}>{book.title}</a></h1>
+                    <h2>{book.author.first_name} {book.author.last_name}</h2> */}
+                </div>
+                ))
+            }
         </div>
     )
 }

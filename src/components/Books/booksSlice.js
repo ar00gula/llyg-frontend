@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 
 export const loadBooks = createAsyncThunk(
   "books/allBooks",
@@ -38,4 +39,17 @@ export const booksSlice = createSlice(sliceOptions);
 
 export const selectAllBooks = (state) => state.books
 
+export const consoleLogMo
+const allBooks = booksSlice.books
+// export const sortBooks = (attribute) => {
+//   let sortedBooks = allBooks.sort(function(a, b) {
+//     let sortA = a[attribute].toUpperCase();
+//     let sortB = b[attribute].toUpperCase();
+//     return (sortA < sortB) ? -1 : (sortA > sortB) ? 1 : 0;
+//     })
+//   return sortedBooks
+// }
+
 export default booksSlice.reducer;
+
+
