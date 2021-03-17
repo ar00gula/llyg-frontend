@@ -8,11 +8,6 @@ export const loadBooks = createAsyncThunk(
     return json
   }
 );
-  //   return async (dispatch) => {
-  //     const books = fetchBooks()
-  //     dispatch({type: 'books/allBooks', payload: books})
-  //   }
-  // };
 
 const sliceOptions = {
   name: "books",
@@ -43,38 +38,4 @@ export const booksSlice = createSlice(sliceOptions);
 
 export const selectAllBooks = (state) => state.books
 
-// export const selectFilteredAllRecipes = (state) => {
-//   const allRecipes = selectAllRecipes(state);
-//   const searchTerm = selectSearchTerm(state);
-
-//   return allRecipes.filter((recipe) =>
-//     recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-// };
-
 export default booksSlice.reducer;
-
-
-// export const booksReducer = (state = initialState, action) => {
-//     switch (action.type) {
-//       case 'books/allBooks':
-//         return {
-//             ...state,
-//             books: action.payload
-//         }
-//       default:
-//         return state;
-//     }
-  // }
-  
-  
-  
-  // export function allBooks(books) {
-  //     return {
-  //       type: 'books/allBooks',
-  //       payload: books
-  //     }
-  //   }
-    
-
-  

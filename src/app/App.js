@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import Home from '../features/Users/Home'
-import LoginForm from '../features/Users/Login'
-import SignUpForm from '../features/Users/Signup'
 import NavBar from '../components/navbar'
 import Landing from '../features/Landing'
-import {setUsername} from '../features/Users/loginSlice'
 import { loadBooks } from "../components/Books/booksSlice"
+import { LoginForm } from '../features/Users/Login'
+import { loginStatus } from '../features/Users/newLoginSlice'
+// import SignUpForm from '../features/Users/Signup'
+
 
 
 import './App.css'
@@ -17,32 +18,9 @@ function App() {
   const { hasError } = useSelector((state) => state.books);
 
   useEffect(() => {
+    loginStatus();
     dispatch(loadBooks());
   }, [dispatch]);
-
-// const handleLogin = (data) => {
-//   dispatch(setUsername(data.username), true)
-// }
-
-// const handleLogout = () => {
-//     dispatch(setUsername("", false))
-//   }
-
-// const loginStatus = () => {
-//   fetch(`http://localhost:3001/logged_in`, {withCredentials: true})
-//   .then(response => response.json())
-//   .then(data => {
-//     if (data.logged_in) {
-//     handleLogin(data)
-//   } else {
-//     handleLogout()
-//   }})
-//     .catch(error => console.log('api errors:', error))      
-// }
-
-// useEffect(() => {
-//     loginStatus()
-// })
 
   return (
     <div>
@@ -57,9 +35,9 @@ function App() {
       <Route 
         exact path='/login' component={LoginForm}
       />
-      <Route 
+      {/* <Route 
         exact path='/signup' component={SignUpForm}
-      />
+      /> */}
       </Switch>
           {/* <Route path="/books/by-title" render={() => <BookCardContainer sortBy={['title']}/>} />
           <Route path="/books/by-author" component={() => <BookCardContainer sortBy={['author', 'last_name']}/>} /> */}

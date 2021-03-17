@@ -1,18 +1,18 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUsername, setPassword } from './loginSlice'
+import { setUsername, setPassword, selectUserInfo } from './newLoginSlice'
 
-function LoginForm(){
+export function LoginForm(){
 
     const history = useHistory()
 
-    const loginInfo = useSelector(state => state.loginInfo)
+    const userInfo = useSelector(selectUserInfo)
     const dispatch = useDispatch()
 
 
     const handleUsernameChange = (event) => {
-        dispatch(setUsername(event.target.value, true))
+        dispatch(setUsername(event.target.value))
     }
     
     const handlePasswordChange = (event) => {
@@ -30,8 +30,8 @@ function LoginForm(){
                 "Accept": "application/json"
             },
             body: JSON.stringify({
-                username: loginInfo.username,
-                password: loginInfo.password
+                username: userInfo.username,
+                password: userInfo.password
             })
         })
         .then(resp => resp.json())
@@ -44,16 +44,17 @@ function LoginForm(){
 
     return (
         <div>
+            {console.log(userInfo)}
             <div>
             <h1>Log In</h1>
             <form className="ui form" onSubmit={handleSubmit}>
                 <div className="field">
                     <label>Username</label>
-                    <input value={loginInfo.username} onChange={handleUsernameChange} type="text" name="username" placeholder="username"/>
+                    {/* <input value={userInfo.username} onChange={handleUsernameChange} type="text" name="username" placeholder="username"/> */}
                 </div>
                 <div className="field">
                     <label>Password</label>
-                    <input value={loginInfo.password} onChange={handlePasswordChange} type="password" name="password" placeholder="password"/>
+                    {/* <input value={userInfo.password} onChange={handlePasswordChange} type="password" name="password" placeholder="password"/> */}
                 </div>
                 
                 <button className="ui button" type="submit">Submit</button>
@@ -66,5 +67,3 @@ function LoginForm(){
         </div>
     )
 } 
-
-export default LoginForm
